@@ -7,11 +7,13 @@ from pion import Pion
 class Board:
 
     def __init__(self, size):
+        '''creating 2dlist of Pions which are classes'''
         self.__size = size
         self.__coordinates = [[Pion() for i in range(self.__size)]
                               for j in range(self.__size)]
 
     def display_board(self):
+        '''display board in console mode'''
         print(" ", end="")
         for i in range(self.__size):
             print("", i, end="")
@@ -23,6 +25,7 @@ class Board:
             print()
 
     def set_field(self, x_coord: int, y_coord: int, color: PionColor):
+        '''corection of valid data, and set field with certtain coordinations '''
         if x_coord < 0 > y_coord or x_coord >= self.__size <= y_coord:
             raise IndexError(
                 "Bad coordinates, coordinates must be beetwen <0,8>")
