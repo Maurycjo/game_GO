@@ -48,8 +48,23 @@ class Board:
                 "Bad coordinates, coordinates must be beetwen <{min_val},{max_val}>".format(min_val=1, max_val=self.__size))
         elif self.__coordinates[y_coord][x_coord].pion_color != PionColor.EMPTY:
             raise ValueError("Bad coordinates, can't overwrite this field")
+        elif self.__check_is_suicide_move(x_coord, y_coord, color):
+            raise ValueError("Suicide move")
         else:
             self.__coordinates[y_coord][x_coord].pion_color = color
+
+    def __check_is_suicide_move(self, x_coord: int, y_coord: int, color: PionColor):
+        '''check is move suicide, if suicide return True, else False'''
+        breath = 4
+        if self.__coordinates[y_coord-1][x_coord].pion_color == color or self.__coordinates[y_coord-1][x_coord].pion_color == PionColor.EMPTY:
+            return False
+        if self.__coordinates[y_coord+1][x_coord].pion_color == color or self.__coordinates[y_coord+1][x_coord].pion_color == PionColor.EMPTY:
+            return False
+        if self.__coordinates[y_coord][x_coord-1].pion_color == color or self.__coordinates[y_coord][x_coord-1].pion_color == PionColor.EMPTY:
+            return False
+        if self.__coordinates[y_coord][x_coord+1].pion_color == color or self.__coordinates[y_coord][x_coord+1].pion_color == PionColor.EMPTY:
+            return False
+        return True
 
     def create_new_group(self):
         '''create new group with unique id in dictionary'''
