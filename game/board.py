@@ -45,7 +45,7 @@ class Board:
         '''corection of valid data, and set field with certtain coordinations '''
         if x_coord < 1 > y_coord or x_coord >= self.__size-2 <= y_coord:
             raise IndexError(
-                "Bad coordinates, coordinates must be beetwen <1,9>")
+                "Bad coordinates, coordinates must be beetwen <{min_val},{max_val}>".format(min_val=1, max_val=self.__size))
         elif self.__coordinates[y_coord][x_coord].pion_color != PionColor.EMPTY:
             raise ValueError("Bad coordinates, can't overwrite this field")
         self.__coordinates[y_coord][x_coord].pion_color = color
