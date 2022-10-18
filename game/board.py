@@ -17,6 +17,7 @@ class Board:
         self.__uniq_id = 0
 
     def __create_edges(self):
+        '''create edges with specified properties on board'''
         for index, pion in enumerate(self.__coordinates[0]):
             pion.pion_color = PionColor.EDGE
             self.__coordinates[index][0].pion_color = PionColor.EDGE
@@ -48,13 +49,14 @@ class Board:
                 "Bad coordinates, coordinates must be beetwen <{min_val},{max_val}>".format(min_val=1, max_val=self.__size))
         elif self.__coordinates[y_coord][x_coord].pion_color != PionColor.EMPTY:
             raise ValueError("Bad coordinates, can't overwrite this field")
-        elif self.__check_is_suicide_move(x_coord, y_coord, color):
+        elif self.__check_if_suicide_move(x_coord, y_coord, color):
             raise ValueError("Suicide move")
         else:
             self.__coordinates[y_coord][x_coord].pion_color = color
+            self.__assingn_pion_to_group(x_coord, y_coord)
 
-    def __check_is_suicide_move(self, x_coord: int, y_coord: int, color: PionColor):
-        '''check is move suicide, if suicide return True, else False'''
+    def __check_if_suicide_move(self, x_coord: int, y_coord: int, color: PionColor):
+        '''check if move is suicide, if suicide return True, else False'''
         breath = 4
         if self.__coordinates[y_coord-1][x_coord].pion_color == color or self.__coordinates[y_coord-1][x_coord].pion_color == PionColor.EMPTY:
             return False
@@ -66,25 +68,47 @@ class Board:
             return False
         return True
 
-    def create_new_group(self):
+    def create_new_group(self, x_coord: int, y_coord: int):
         '''create new group with unique id in dictionary'''
         self.__group_dict[self.__uniq_id] = Group()
+        print("uniqID: ", self.__uniq_id)
+        self.__group_dict[self.__uniq_id].add_pion_to_group(x_coord, y_coord)
+        self.__coordinates[y_coord][x_coord].group_id = self.__uniq_id
         self.__uniq_id += 1
-
-    def assingn_pion_to_group(self, x_coord: int, y_coord: int, color: PionColor):
-        '''assingn pion to group
-        type_of_assign:
-         1- new group,
-         2- to existing group,
-         3- to existing group with merge 2 groups'''
-
-        type_of_assign = 1
 
     def remove_group_from_board(self, id: int):
         '''erase pions in group, and remove group'''
         for pion_coord in self.__group_dict[id]:
             self.__coordinates[pion_coord[0]][pion_coord[1]].erase_pion()
         self.__group_dict.pop[id]
+
+    def __pop_group(self):
+        '''pop group when Pion immediately assignet to group'''
+        pass
+
+    def __assingn_pion_to_group(self, x_coord: int, y_coord: int):
+        '''assingn pion to group'''
+        # type_of_assign:
+        #  0- new group
+        #  1- to existing group,
+        #  2- to existing group with merge 2 groups
+        #  3- to existing group with merge 3 groups
+        #  4- to existing group with merge 4 groups
+
+        self.create_new_group(x_coord, y_coord)
+
+        if self.__coordinates[y_coord-1][x_coord].pion_color == self.__coordinates[y_coord][x_coord].pion_color:
+            self.__group_dict[self.__coordinates[y_coord-1]
+                              [x_coord].group_id].merge_groups(self.__coordinates[y_coord][x_coord].group_id)
+        if self.__coordinates[y_coord+1][x_coord].pion_color == self.__coordinates[y_coord][x_coord].pion_color:
+            self.__group_dict[self.__coordinates[y_coord+1]
+                              [x_coord].group_id].merge_groups(self.__coordinates[y_coord][x_coord].group_id)
+        if self.__coordinates[y_coord][x_coord-1].pion_color == self.__coordinates[y_coord][x_coord].pion_color:
+            self.__group_dict[self.__coordinates[y_coord]
+                              [x_coord-1].group_id].merge_groups(self.__coordinates[y_coord][x_coord].group_id)
+        if self.__coordinates[y_coord][x_coord+1].pion_color == self.__coordinates[y_coord][x_coord].pion_color:
+            self.__group_dict[self.__coordinates[y_coord]
+                              [x_coord+1].group_id].merge_groups(self.__coordinates[y_coord][x_coord].group_id)
 
 
 if __name__ == "__main__":

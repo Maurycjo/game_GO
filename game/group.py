@@ -15,7 +15,7 @@ class Group:
     def pions_lists(self):
         return self.__pions_list
 
-    def add_pion_to_group(self, pion: Pion, x_coord, y_coord):
+    def add_pion_to_group(self, x_coord, y_coord):
         '''add to __pion_list tuple of coordinates (x, y)'''
         self.__pions_list.append((x_coord, y_coord))
         self.__update_breath()
@@ -24,7 +24,7 @@ class Group:
         pass
 
     def merge_groups(self, group: 'Group'):
-        pass
+        print("that methot didnt implemented yet")
 
     def __update_breath(self):
         pass
