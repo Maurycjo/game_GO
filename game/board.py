@@ -71,7 +71,6 @@ class Board:
     def create_new_group(self, x_coord: int, y_coord: int):
         '''create new group with unique id in dictionary'''
         self.__group_dict[self.__uniq_id] = Group()
-        print("uniqID: ", self.__uniq_id)
         self.__group_dict[self.__uniq_id].add_pion_to_group(x_coord, y_coord)
         self.__coordinates[y_coord][x_coord].group_id = self.__uniq_id
         self.__uniq_id += 1
@@ -80,35 +79,32 @@ class Board:
         '''erase pions in group, and remove group'''
         for pion_coord in self.__group_dict[id]:
             self.__coordinates[pion_coord[0]][pion_coord[1]].erase_pion()
-        self.__group_dict.pop[id]
-
-    def __pop_group(self):
-        '''pop group when Pion immediately assignet to group'''
-        pass
+        # self.__group_dict.pop[id]
+        del (self.__group_dict[id])
 
     def __assingn_pion_to_group(self, x_coord: int, y_coord: int):
         '''assingn pion to group'''
-        # type_of_assign:
-        #  0- new group
-        #  1- to existing group,
-        #  2- to existing group with merge 2 groups
-        #  3- to existing group with merge 3 groups
-        #  4- to existing group with merge 4 groups
-
         self.create_new_group(x_coord, y_coord)
 
         if self.__coordinates[y_coord-1][x_coord].pion_color == self.__coordinates[y_coord][x_coord].pion_color:
-            self.__group_dict[self.__coordinates[y_coord-1]
-                              [x_coord].group_id].merge_groups(self.__coordinates[y_coord][x_coord].group_id)
+            self.merge_groups(self.__group_dict[self.__coordinates[y_coord-1][x_coord].group_id],
+                              self.__group_dict[self.__coordinates[y_coord][x_coord].group_id], self.__coordinates[y_coord][x_coord].group_id)
         if self.__coordinates[y_coord+1][x_coord].pion_color == self.__coordinates[y_coord][x_coord].pion_color:
-            self.__group_dict[self.__coordinates[y_coord+1]
-                              [x_coord].group_id].merge_groups(self.__coordinates[y_coord][x_coord].group_id)
+            self.merge_groups(self.__group_dict[self.__coordinates[y_coord+1][x_coord].group_id],
+                              self.__group_dict[self.__coordinates[y_coord][x_coord].group_id], self.__coordinates[y_coord][x_coord].group_id)
         if self.__coordinates[y_coord][x_coord-1].pion_color == self.__coordinates[y_coord][x_coord].pion_color:
-            self.__group_dict[self.__coordinates[y_coord]
-                              [x_coord-1].group_id].merge_groups(self.__coordinates[y_coord][x_coord].group_id)
+            self.merge_groups(self.__group_dict[self.__coordinates[y_coord][x_coord-1].group_id],
+                              self.__group_dict[self.__coordinates[y_coord][x_coord].group_id], self.__coordinates[y_coord][x_coord].group_id)
         if self.__coordinates[y_coord][x_coord+1].pion_color == self.__coordinates[y_coord][x_coord].pion_color:
-            self.__group_dict[self.__coordinates[y_coord]
-                              [x_coord+1].group_id].merge_groups(self.__coordinates[y_coord][x_coord].group_id)
+            self.merge_groups(self.__group_dict[self.__coordinates[y_coord][x_coord+1].group_id],
+                              self.__group_dict[self.__coordinates[y_coord][x_coord].group_id], self.__coordinates[y_coord][x_coord].group_id)
+
+    def merge_groups(self, group_a: Group, group_b: Group, group_b_id: int):
+        if group_a == group_b:
+            return
+        group_a.merge_pions_list(group_b)
+        # self.__group_dict.pop[group_b_id]
+        del (self.__group_dict[group_b_id])
 
 
 if __name__ == "__main__":
