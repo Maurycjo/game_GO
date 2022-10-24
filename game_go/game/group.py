@@ -1,5 +1,3 @@
-from game_go.game.pion import Pion
-from itertools import groupby
 import numpy as np
 
 class Group:

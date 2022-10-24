@@ -1,7 +1,6 @@
-#import numpy as np
-from group import Group
-from my_enums import PionColor
-from pion import Pion
+from game.group import Group
+from game.my_enums import PionColor
+from game.pion import Pion
 
 
 class Board:

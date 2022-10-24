@@ -1,4 +1,4 @@
-from my_enums import PionColor
+from game.my_enums import PionColor
 
 
 class Pion:
