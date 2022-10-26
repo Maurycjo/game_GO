@@ -55,14 +55,26 @@ def test_put_pion_on_board_expected_index_error():
         board.set_field(9, 10, PionColor.BLACK)
 
 
-
-
-
-
-
-
-
-
-
-
+def test_put_pion_on_board_expected_value_error():
+    board = Board(9)
+    board.set_field(2, 1, PionColor.BLACK)
+    board.set_field(1, 2, PionColor.BLACK)
+    board.set_field(3, 2, PionColor.WHITE)
+    board.set_field(3, 4, PionColor.WHITE)
+    board.set_field(2, 3, PionColor.WHITE)
+    board.set_field(4, 3, PionColor.WHITE)
+    #overwriting
+    with pytest.raises(ValueError):
+        board.set_field(3, 2, PionColor.WHITE)
+    with pytest.raises(ValueError):
+        board.set_field(3, 2, PionColor.BLACK)
+    with pytest.raises(ValueError):
+        board.set_field(2, 1, PionColor.BLACK)
+    with pytest.raises(ValueError):
+        board.set_field(4, 3, PionColor.BLACK)
+    #suicide move
+    with pytest.raises(ValueError):
+        board.set_field(3, 3, PionColor.BLACK)
+    with pytest.raises(ValueError):
+        board.set_field(1, 1, PionColor.WHITE)
 

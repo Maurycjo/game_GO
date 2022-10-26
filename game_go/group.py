@@ -2,10 +2,10 @@ import numpy as np
 
 class Group:
 
-    def __init__(self):
+    def __init__(self, id):
         self.__pions_list = []
         self.__breath = None
-        self.__id = -1
+        self.__id = id
 
     @property
     def breath(self):
@@ -37,6 +37,10 @@ class Group:
 
     def merge_pions_list(self, group: 'Group'):
         self.pions_lists += group.pions_lists
+
+    def __update_pions_id(self, new_id: int):
+        for pion in self.__pions_list:
+            pion.group_id = new_id
 
     def remove_group(self):
         pass

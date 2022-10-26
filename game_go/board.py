@@ -19,6 +19,15 @@ class Board:
         '''return horizonal and vertical size of board with edges'''
         return len(self.__coordinates), len(self.__coordinates[0])
 
+    @property
+    def coordinates(self):
+        '''return coordinates[y][x]'''
+        return self.__coordinates
+
+    @property
+    def group_dict(self):
+        return self.__group_dict
+
     def __create_edges(self):
         '''create edges with specified properties on board'''
         for index, pion in enumerate(self.__coordinates[0]):
@@ -78,7 +87,7 @@ class Board:
 
     def create_new_group(self, x_coord: int, y_coord: int):
         '''create new group with unique id in dictionary'''
-        self.__group_dict[self.__uniq_id] = Group()
+        self.__group_dict[self.__uniq_id] = Group(self.__uniq_id)
         self.__group_dict[self.__uniq_id].add_pion_to_group(x_coord, y_coord)
         self.__coordinates[y_coord][x_coord].group_id = self.__uniq_id
         self.__uniq_id += 1
@@ -111,6 +120,8 @@ class Board:
         if group_a == group_b:
             return
         group_a.merge_pions_list(group_b)
+        for x, y in group_b.pions_lists:
+            self.__coordinates[y][x].group_id = group_a.group_id
         # self.__group_dict.pop[group_b_id]
         del (self.__group_dict[group_b_id])
 
