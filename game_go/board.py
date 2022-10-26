@@ -1,6 +1,6 @@
-from game.group import Group
-from game.my_enums import PionColor
-from game.pion import Pion
+from game_go.group import Group
+from game_go.my_enums import PionColor
+from game_go.pion import Pion
 
 
 class Board:
