@@ -15,6 +15,10 @@ class Board:
         self.__uniq_id = 0
         
 
+    def get_board_size(self):
+        '''return horizonal and vertical size of board with edges'''
+        return len(self.__coordinates), len(self.__coordinates[0])
+
     def __create_edges(self):
         '''create edges with specified properties on board'''
         for index, pion in enumerate(self.__coordinates[0]):
@@ -53,6 +57,11 @@ class Board:
         else:
             self.__coordinates[y_coord][x_coord].pion_color = color
             self.__assingn_pion_to_group(x_coord, y_coord)
+
+    def get_field_color(self, x_coord: int, y_coord: int) -> PionColor:
+        '''get color of field with coord x_coord and y_coord'''
+        return self.__coordinates[y_coord][x_coord].pion_color
+
 
     def __check_if_suicide_move(self, x_coord: int, y_coord: int, color: PionColor):
         '''check if move is suicide, if suicide return True, else False'''
