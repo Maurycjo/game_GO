@@ -51,13 +51,28 @@ def test_assigned_to_group_2():
     assert board.coordinates[3][1].group_id == 3
 
 
-def test_breath_is_correct():
+def test_simple_breath_is_correct():
     board = Board(9)
     board.set_field(1, 1, PionColor.WHITE)
     assert board.group_dict[0].breath == 2
 
+    board.set_field(1, 2, PionColor.WHITE)
+    assert board.group_dict[0].breath == 3
 
+    board.set_field(2, 1, PionColor.BLACK)
+    assert board.group_dict[0].breath == 2
+    assert board.group_dict[2].breath == 2
 
+def test_update_breath():
+    board = Board(9)
+    board.set_field(3, 3, PionColor.WHITE)
+    board.set_field(5, 3, PionColor.WHITE)
+    board.set_field(4, 2, PionColor.WHITE)
+    board.set_field(4, 4, PionColor.WHITE)
+    board.set_field(4, 3, PionColor.WHITE)
+
+    assert len(board.group_dict[board.coordinates[3][4].group_id].pions_list) == 5
+    assert board.group_dict[board.coordinates[2][4].group_id].breath == 12
 
 
 
