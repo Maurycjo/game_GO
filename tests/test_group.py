@@ -51,7 +51,9 @@ def test_assigned_to_group_2():
     assert board.coordinates[3][1].group_id == 3
 
 
-
+def test_breath_is_correct():
+    board = Board(9)
+    board.set_field(1, 1, PionColor.WHITE)
 
 
 

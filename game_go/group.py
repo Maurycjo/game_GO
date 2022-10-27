@@ -1,4 +1,3 @@
-import numpy as np
 
 class Group:
 
@@ -11,13 +10,16 @@ class Group:
     def breath(self):
         return self.__breath
 
+    @breath.setter
+    def breath(self, breath):
+        if breath < 0:
+            raise ValueError("group_id have to be greater equal 0")
+        else:
+            self.__breath = breath
+
     @property
     def pions_lists(self):
         return self.__pions_list
-
-    @pions_lists.setter
-    def pions_lists(self, list):
-        return list
 
     @property
     def id(self):
@@ -48,8 +50,3 @@ class Group:
     def __update_breath(self):
         pass
 
-
-if __name__ == "__main__":
-
-    a = np.array([1,2])
-    print(a)
