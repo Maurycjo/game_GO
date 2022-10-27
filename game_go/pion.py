@@ -43,3 +43,11 @@ class Pion:
             return "o"
         if self.__pion_color == PionColor.EDGE:
             return "#"
+
+    def get_reversed_color(self):
+        '''if it possible get reversed color'''
+        if self.__pion_color==PionColor.WHITE:
+            return PionColor.BLACK
+        if self.__pion_color==PionColor.BLACK:
+            return PionColor.WHITE
+        return self.__pion_color

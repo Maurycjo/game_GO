@@ -22,13 +22,13 @@ def test_assigned_to_group():
     board.set_field(1, 2, PionColor.WHITE)
     assert board.coordinates[1][1].group_id == 0
     assert board.coordinates[2][1].group_id == 0
-    assert len(board.group_dict[0].pions_lists)== 2
+    assert len(board.group_dict[0].pions_list)== 2
 
 
     board.set_field(1, 4, PionColor.WHITE)
     assert board.coordinates[4][1].group_id == 2
     board.set_field(1, 3, PionColor.WHITE)
-    assert len(board.group_dict[2].pions_lists) == 4
+    assert len(board.group_dict[2].pions_list) == 4
     assert board.coordinates[1][1].group_id == 2
     assert board.coordinates[2][1].group_id == 2
     assert board.coordinates[4][1].group_id == 2
@@ -40,7 +40,7 @@ def test_assigned_to_group_2():
     board.set_field(1, 2, PionColor.WHITE)
     assert board.coordinates[1][1].group_id == 0
     assert board.coordinates[2][1].group_id == 0
-    assert len(board.group_dict[0].pions_lists)== 2
+    assert len(board.group_dict[0].pions_list)== 2
 
     board.set_field(1, 4, PionColor.WHITE)
     assert board.coordinates[4][1].group_id == 2
@@ -54,6 +54,7 @@ def test_assigned_to_group_2():
 def test_breath_is_correct():
     board = Board(9)
     board.set_field(1, 1, PionColor.WHITE)
+    assert board.group_dict[0].breath == 2
 
 
 
