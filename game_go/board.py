@@ -94,8 +94,12 @@ class Board:
 
     def remove_group_from_board(self, id: int):
         '''erase pions in group, and remove group'''
-        for pion_coord in self.__group_dict[id]:
-            self.__coordinates[pion_coord[0]][pion_coord[1]].erase_pion()
+        print("halo")
+        print(id)
+        print(self.__group_dict[id].pions_list)
+
+        for pion_coord in self.__group_dict[id].pions_list:
+            self.__coordinates[pion_coord[1]][pion_coord[0]].erase_pion()
         # self.__group_dict.pop[id]
         del (self.__group_dict[id])
 
@@ -132,39 +136,41 @@ class Board:
         # update breath in own group
         breath = 0
         for x, y in group.pions_list:
-            if self.__coordinates[x - 1][y].pion_color == PionColor.EMPTY:
+            if self.__coordinates[y][x - 1].pion_color == PionColor.EMPTY:
                 breath += 1
-            if self.__coordinates[x + 1][y].pion_color == PionColor.EMPTY:
+            if self.__coordinates[y][x + 1].pion_color == PionColor.EMPTY:
                 breath += 1
-            if self.__coordinates[x][y - 1].pion_color == PionColor.EMPTY:
+            if self.__coordinates[y - 1][x].pion_color == PionColor.EMPTY:
                 breath += 1
-            if self.__coordinates[x][y + 1].pion_color == PionColor.EMPTY:
+            if self.__coordinates[y + 1][x].pion_color == PionColor.EMPTY:
                 breath += 1
         group.breath = breath
         # update breath in affected groups
         affected_group = []
-        if self.__coordinates[y_coord][x_coord-1].pion_color== self.__coordinates[y_coord][x_coord].get_reversed_color():
+        if self.__coordinates[y_coord][x_coord-1].pion_color == self.__coordinates[y_coord][x_coord].get_reversed_color():
             self.__group_dict[self.__coordinates[y_coord][x_coord-1].group_id].decrement_breath()
             if self.__group_dict[self.__coordinates[y_coord][x_coord-1].group_id].breath == 0:
-                self.remove_group_from_board(self.__group_dict[self.__coordinates[y_coord][x_coord-1].group_id])
+                self.remove_group_from_board(self.__group_dict[self.__coordinates[y_coord][x_coord-1].group_id].group_id)
+
+
 
         if self.__coordinates[y_coord][x_coord + 1].pion_color == self.__coordinates[y_coord][
             x_coord].get_reversed_color():
             self.__group_dict[self.__coordinates[y_coord][x_coord + 1].group_id].decrement_breath()
             if self.__group_dict[self.__coordinates[y_coord][x_coord + 1].group_id].breath == 0:
-                self.remove_group_from_board(self.__group_dict[self.__coordinates[y_coord][x_coord + 1].group_id])
+                self.remove_group_from_board(self.__group_dict[self.__coordinates[y_coord][x_coord + 1].group_id].group_id)
 
         if self.__coordinates[y_coord - 1][x_coord].pion_color == self.__coordinates[y_coord][
             x_coord].get_reversed_color():
             self.__group_dict[self.__coordinates[y_coord - 1][x_coord].group_id].decrement_breath()
             if self.__group_dict[self.__coordinates[y_coord - 1][x_coord].group_id].breath == 0:
-                self.remove_group_from_board(self.__group_dict[self.__coordinates[y_coord - 1][x_coord].group_id])
+                self.remove_group_from_board(self.__group_dict[self.__coordinates[y_coord - 1][x_coord].group_id].group_id)
 
         if self.__coordinates[y_coord + 1][x_coord].pion_color == self.__coordinates[y_coord][
             x_coord].get_reversed_color():
             self.__group_dict[self.__coordinates[y_coord + 1][x_coord].group_id].decrement_breath()
             if self.__group_dict[self.__coordinates[y_coord + 1][x_coord].group_id].breath == 0:
-                self.remove_group_from_board(self.__group_dict[self.__coordinates[y_coord + 1][x_coord].group_id])
+                self.remove_group_from_board(self.__group_dict[self.__coordinates[y_coord + 1][x_coord].group_id].group_id)
 
 
 

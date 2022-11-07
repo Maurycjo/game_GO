@@ -74,6 +74,58 @@ def test_update_breath():
     assert len(board.group_dict[board.coordinates[3][4].group_id].pions_list) == 5
     assert board.group_dict[board.coordinates[2][4].group_id].breath == 12
 
+def test_update_breath_2():
+    board = Board(9)
+    board.set_field(1, 2, PionColor.WHITE)
+    board.set_field(2, 1, PionColor.WHITE)
+    board.set_field(1, 1, PionColor.WHITE)
+    assert board.group_dict[board.coordinates[1][1].group_id].breath == 4
+
+    board.set_field(2, 3, PionColor.BLACK)
+    board.set_field(3, 2, PionColor.BLACK)
+    board.set_field(2, 2, PionColor.BLACK)
+    assert board.group_dict[board.coordinates[2][2].group_id].breath == 6
+    assert board.group_dict[board.coordinates[1][1].group_id].breath == 2
+
+def test_simple_remove_pion():
+    board = Board(9)
+    board.set_field(1, 1, PionColor.WHITE)
+    board.set_field(1, 2, PionColor.BLACK)
+    board.set_field(2, 1, PionColor.BLACK)
+
+    assert board.get_field_color(1, 1)==PionColor.EMPTY
+
+def test_remove_group():
+    board = Board(9)
+    board.set_field(3, 2, PionColor.WHITE)
+    board.set_field(4, 2, PionColor.WHITE)
+    board.set_field(5, 2, PionColor.WHITE)
+
+    board.set_field(2, 3, PionColor.WHITE)
+    board.set_field(3, 3, PionColor.BLACK)
+    board.set_field(4, 3, PionColor.BLACK)
+    board.set_field(5, 3, PionColor.BLACK)
+    board.set_field(6, 3, PionColor.WHITE)
+
+    board.set_field(2, 4, PionColor.WHITE)
+    board.set_field(3, 4, PionColor.BLACK)
+    board.set_field(4, 4, PionColor.WHITE)
+    board.set_field(5, 4, PionColor.WHITE)
+
+    board.set_field(3, 5, PionColor.WHITE)
+
+    assert board.get_field_color(3, 3) == PionColor.EMPTY
+    assert board.get_field_color(4, 3) == PionColor.EMPTY
+    assert board.get_field_color(5, 3) == PionColor.EMPTY
+    assert board.get_field_color(3, 4) == PionColor.EMPTY
+
+
+
+
+
+
+
+
 
 
 
