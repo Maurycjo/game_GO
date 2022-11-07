@@ -171,28 +171,3 @@ class Board:
             self.__group_dict[self.__coordinates[y_coord + 1][x_coord].group_id].decrement_breath()
             if self.__group_dict[self.__coordinates[y_coord + 1][x_coord].group_id].breath == 0:
                 self.remove_group_from_board(self.__group_dict[self.__coordinates[y_coord + 1][x_coord].group_id].group_id)
-
-
-
-if __name__ == "__main__":
-    board = Board(9)
-    turn = 0
-
-    while True:
-        print("czarny") if turn % 2 == 0 else print("bialy")
-        x = int(input("podaj x: "))
-        if x == 420:
-            break
-        y = int(input("podaj y: "))
-        try:
-            if turn % 2 == 0:
-                board.set_field(x, y, PionColor.BLACK)
-                board.display_board()
-            else:
-                board.set_field(x, y, PionColor.WHITE)
-                board.display_board()
-            turn += 1
-        except IndexError as e:
-            print(e)
-        except ValueError as e:
-            print(e)
