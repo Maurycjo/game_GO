@@ -1,6 +1,5 @@
 from game_go.my_enums import PionColor
 
-
 class Pion:
 
     def __init__(self):

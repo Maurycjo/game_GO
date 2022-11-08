@@ -128,7 +128,6 @@ class Board:
         group_a.merge_pions_list(group_b)
         for x, y in group_b.pions_list:
             self.__coordinates[y][x].group_id = group_a.group_id
-        # self.__group_dict.pop[group_b_id]
         del (self.__group_dict[group_b_id])
 
     def __update_breath(self, x_coord: int, y_coord: int, group: Group):
