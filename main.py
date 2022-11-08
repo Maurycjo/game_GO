@@ -1,38 +1,43 @@
 from game_go.board import Board
-from game_go.group import Group
 from game_go.my_enums import PionColor
-from game_go.pion import Pion
 from game_go.player import Player
+import os
 
-
-if __name__ =="__main":
+if __name__ =="__main__":
     print("Welcome in Game Go")
-    board_size = input("Please enter what board size you want: ")
+    board_size = int(input("Please enter what board size you want: "))
 
     board = Board(board_size)
     player1 = Player()
     player2 = Player()
-    player1.select_name()
-    player2.select_name()
-    player1.choose_color()
-    player2.choose_color(player1)
+    print("player1, ", end="")
+    player1.select_name_console()
+    player1.choose_color_console()
+
+    print("player2, ", end="")
+    player2.select_name_console()
+    player2.symbol = player1.get_reversed_color()
 
     turn = 0
 
     while True:
-            print("type 'exit' if you want leave")
+            os.system('clear')
+            board.display_board()
+            print("type 'exit' to leave game")
             print(player1.player_name) if turn % 2 == 0 else print(player2.player_name)
-            x = int(input("podaj x: "))
-            if x == 420:
+            x = input("podaj x: ")
+            if x == "exit":
                 break
-            y = int(input("podaj y: "))
+            y = input("podaj y: ")
+            if y == "exit":
+                break
+            x = int(x)
+            y = int(y)
             try:
                 if turn % 2 == 0:
                     board.set_field(x, y, PionColor.BLACK)
-                    board.display_board()
                 else:
                     board.set_field(x, y, PionColor.WHITE)
-                    board.display_board()
                 turn += 1
             except IndexError as e:
                 print(e)
